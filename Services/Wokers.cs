@@ -70,6 +70,8 @@ class Wokers
 
     private async Task ReadyAsync()
     {
+        // this method will add commands globally, but can take around an hour
+        await _restClient.DeleteAllGlobalCommandsAsync();
         if (IsInDevelopment())
         {
             // this is where you put the id of the test discord guild
@@ -78,8 +80,6 @@ class Wokers
         }
         else
         {
-            // this method will add commands globally, but can take around an hour
-            await _restClient.DeleteAllGlobalCommandsAsync();
             await _commands.RegisterCommandsGloballyAsync(true);
         }
         Console.WriteLine($"Connected as -> [{_client.CurrentUser}] :)");
@@ -111,5 +111,17 @@ class Wokers
             return true;
         }
         return false;
+    }
+
+    public void Dispose()
+    {
+        _client.Dispose();
+        _restClient.Dispose();
+        _commands.Dispose();
+    }
+
+    ~Wokers()
+    {
+        Dispose();
     }
 }
