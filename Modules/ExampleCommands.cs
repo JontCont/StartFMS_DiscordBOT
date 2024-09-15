@@ -1,11 +1,12 @@
 
 // interation modules must be public and inherit from an IInterationModuleBase
+using Discord;
 using Discord.Interactions;
 
 public class ExampleCommands : InteractionModuleBase<SocketInteractionContext>
 {
     // dependencies can be accessed through Property injection, public properties with public setters will be set by the service provider
-    public InteractionService Commands { get; set; }
+    public required InteractionService Commands { get; set; }
     private CommandHandler _handler;
 
     // constructor injection is also a valid way to access the dependecies
@@ -15,7 +16,7 @@ public class ExampleCommands : InteractionModuleBase<SocketInteractionContext>
     }
 
     // our first /command!
-    [SlashCommand("8ball", "find your answer!")]
+    [SlashCommand("8ball", "輸入問題，獲得答案")]
     public async Task EightBall(string question)
     {
         // create a list of possible replies

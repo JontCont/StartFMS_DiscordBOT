@@ -20,7 +20,9 @@ public class CommandHandler
     public async Task InitializeAsync()
     {
         // add the public modules that inherit InteractionModuleBase<T> to the InteractionService
-        await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
+        await _commands.AddModuleAsync<GeneralCommands>(_services);
+        await _commands.AddModuleAsync<ExampleCommands>(_services);
+
 
         // process the InteractionCreated payloads to execute Interactions commands
         _client.InteractionCreated += HandleInteraction;

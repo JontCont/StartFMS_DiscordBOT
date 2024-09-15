@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Discord.Interactions;
 using Microsoft.Extensions.Configuration;
+using Discord.Rest;
 
 class Wokers
 {
     // setup our fields we assign later
     private readonly IConfiguration _config;
-    private DiscordSocketClient? _client;
-    private InteractionService? _commands;
+    private DiscordSocketClient _client = null!;
+    private DiscordRestClient _restClient = null!;
+    private InteractionService _commands = null!;
     private ulong _testGuildId;
 
     public Wokers()
@@ -24,7 +26,8 @@ class Wokers
 
         // build the configuration and assign to _config          
         _config = _builder.Build();
-        _testGuildId = ulong.Parse(_config["TestGuildId"]);
+        _testGuildId = ulong.Parse(_config["TestGuildId"]!);
+        _restClient = new DiscordRestClient();
     }
 
     public async Task RunAsync()
@@ -32,6 +35,9 @@ class Wokers
         // call ConfigureServices to create the ServiceCollection/Provider for passing around the services
         using (var services = ConfigureServices())
         {
+            // get the rest client and login
+            await _restClient.LoginAsync(TokenType.Bot, _config["Token"]);
+            
             // get the client and assign to client 
             // you get the services via GetRequiredService<T>
             var client = services.GetRequiredService<DiscordSocketClient>();
@@ -72,6 +78,7 @@ class Wokers
         else
         {
             // this method will add commands globally, but can take around an hour
+            await _restClient.DeleteAllGlobalCommandsAsync();
             await _commands.RegisterCommandsGloballyAsync(true);
         }
         Console.WriteLine($"Connected as -> [{_client.CurrentUser}] :)");
@@ -92,7 +99,7 @@ class Wokers
 
     static bool IsDebug()
     {
-        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        var env = "development";// Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
         Console.WriteLine($"Environment: {env}");
         if (env == null)
         {
