@@ -12,7 +12,7 @@ using Discord.Rest;
 class Wokers
 {
     // setup our fields we assign later
-    private readonly IConfiguration _config;
+    private static AppConfigs _appConfigs = null!;
     private DiscordSocketClient _client = null!;
     private DiscordRestClient _restClient = null!;
     private InteractionService _commands = null!;
@@ -25,8 +25,9 @@ class Wokers
             .AddJsonFile(path: "config.json");
 
         // build the configuration and assign to _config          
-        _config = _builder.Build();
-        _testGuildId = ulong.Parse(_config["TestGuildId"]!);
+        var config = _builder.Build();
+        _appConfigs = config.Get<AppConfigs>() ?? new AppConfigs();
+        _testGuildId = ulong.Parse(_appConfigs.TestGuildId);
         _restClient = new DiscordRestClient();
     }
 
@@ -36,8 +37,8 @@ class Wokers
         using (var services = ConfigureServices())
         {
             // get the rest client and login
-            await _restClient.LoginAsync(TokenType.Bot, _config["Token"]);
-            
+            await _restClient.LoginAsync(TokenType.Bot, _appConfigs.Token);
+
             // get the client and assign to client 
             // you get the services via GetRequiredService<T>
             var client = services.GetRequiredService<DiscordSocketClient>();
@@ -51,7 +52,7 @@ class Wokers
             client.Ready += ReadyAsync;
 
             // this is where we get the Token value from the configuration file, and start the bot
-            await client.LoginAsync(TokenType.Bot, _config["Token"]);
+            await client.LoginAsync(TokenType.Bot, _appConfigs.Token);
             await client.StartAsync();
 
             // we get the CommandHandler class here and call the InitializeAsync method to start things up for the CommandHandler service
@@ -69,7 +70,7 @@ class Wokers
 
     private async Task ReadyAsync()
     {
-        if (IsDebug())
+        if (IsInDevelopment())
         {
             // this is where you put the id of the test discord guild
             System.Console.WriteLine($"In debug mode, adding commands to {_testGuildId}...");
@@ -90,16 +91,16 @@ class Wokers
         // 這裡返回一個 ServiceProvider，稍後用於調用這些服務
         // 我們可以在這裡添加我們可以訪問的類型，因此添加新的 using 語句：
         return new ServiceCollection()
-            .AddSingleton(_config)
+            .AddSingleton(_appConfigs)
             .AddSingleton<DiscordSocketClient>()
             .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
             .AddSingleton<CommandHandler>()
             .BuildServiceProvider();
     }
 
-    static bool IsDebug()
+    static bool IsInDevelopment()
     {
-        var env = "development";// Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        var env = _appConfigs.Environment;
         Console.WriteLine($"Environment: {env}");
         if (env == null)
         {
