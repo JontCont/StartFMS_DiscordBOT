@@ -325,13 +325,13 @@ class GeneralCommands : InteractionModuleBase<SocketInteractionContext>
 
 
     //抽身分組
-    [SlashCommand("抽身分組", "抽身分組")]
+    [SlashCommand("抽職業", "抽職業搂")]
     public async Task ReadomRole()
     {
-        string[] relos = { "職業 : 鑑賞家", "職業 : 盜賊", "職業 : 賭徒", "職業 : 藝術家", "職業 : 設計師", "職業 : 藝人", "職業 : 法師", "職業 : 巫師", "職業 : 魔法師", "職業 : 巫女" };
+        string[] relos = { "職業 : 鑑賞家", "職業 : 盜賊", "職業 : 賭徒", "職業 : 藝術家", "職業 : 設計師", "職業 : 藝人", "職業 : 法師", "職業 : 巫師", "職業 : 魔法師", "職業 : 劍士", "職業 : 咒術師", "職業 : 咒言師", "職業 : 無業戰士" };
         Random random = new Random();
         int index = random.Next(relos.Length);
-        await RespondAsync($"您抽到 [{relos[index]}] ", embeds: [], ephemeral: true);
+        await RespondAsync($"您抽到 [{relos[index]}] ", embeds: [], ephemeral: false);
 
         var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == relos[index]);
         if (role == null)
@@ -364,7 +364,7 @@ class GeneralCommands : InteractionModuleBase<SocketInteractionContext>
     [RequireUserPermission(GuildPermission.Administrator)]
     public async Task RemoveAllRole()
     {
-        string[] relos = { "職業 : 鑑賞家", "職業 : 盜賊", "職業 : 賭徒", "職業 : 藝術家", "職業 : 設計師", "職業 : 藝人", "職業 : 法師", "職業 : 巫師", "職業 : 魔法師", "職業 : 巫女" };
+        string[] relos = { "職業 : 鑑賞家", "職業 : 盜賊", "職業 : 賭徒", "職業 : 藝術家", "職業 : 設計師", "職業 : 藝人", "職業 : 法師", "職業 : 巫師", "職業 : 魔法師", "職業 : 劍士", "職業 : 咒術師", "職業 : 咒言師", "職業 : 無業戰士" };
         var guild = Context.Guild;
         foreach (var role in guild.Roles)
         {
