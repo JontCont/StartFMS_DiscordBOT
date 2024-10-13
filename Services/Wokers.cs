@@ -22,7 +22,7 @@ class Wokers
     {
         var _builder = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile(path: "config.json");
+            .AddJsonFile(path: "appsetting.json");
 
         // build the configuration and assign to _config          
         var config = _builder.Build();

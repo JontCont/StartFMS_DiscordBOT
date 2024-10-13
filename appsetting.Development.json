@@ -1,0 +1,5 @@
+{
+  "Environment": "development",
+  "Token":  "YOUR_BOT_TOKEN",
+  "TestGuildId": "YOUR_CHANNEL_ID"
+}

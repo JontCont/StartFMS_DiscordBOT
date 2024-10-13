@@ -1,5 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Target Name="MergeJsonFiles" AfterTargets="Build">
+    <ItemGroup>
+      <JsonFiles Include="appsetting.*.json" />
+    </ItemGroup>
 
+    <ReadLinesFromFile File="@(JsonFiles)">
+      <Output TaskParameter="Lines" ItemName="MergedJsonLines" />
+    </ReadLinesFromFile>
+
+    <WriteLinesToFile 
+      File="$(OutputPath)appsetting.json" 
+      Lines="@(MergedJsonLines)" 
+      Overwrite="true" />
+  </Target>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
