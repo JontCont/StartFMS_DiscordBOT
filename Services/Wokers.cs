@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Discord.Interactions;
 using Microsoft.Extensions.Configuration;
 using Discord.Rest;
+using System.Diagnostics;
 
 class Wokers
 {
@@ -20,9 +21,12 @@ class Wokers
 
     public Wokers()
     {
+        // 確認有沒有 appsettings.json
+        Console.WriteLine("appsettings Exists : " + File.Exists("appsettings.json"));
+        
         var _builder = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
-            .AddJsonFile(path: "appsetting.json");
+            .AddJsonFile(path: "appsettings.json");
 
         // build the configuration and assign to _config          
         var config = _builder.Build();
