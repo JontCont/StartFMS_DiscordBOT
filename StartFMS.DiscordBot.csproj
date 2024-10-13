@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Target Name="MergeJsonFiles" AfterTargets="Build">
+  <Target Name="MergeJsonFiles" AfterTargets="Build;Publish">
     <ItemGroup>
-      <JsonFiles Include="appsetting.*.json" />
+      <JsonFiles Include="appsettings.*.json" />
     </ItemGroup>
 
     <ReadLinesFromFile File="@(JsonFiles)">
@@ -9,7 +9,7 @@
     </ReadLinesFromFile>
 
     <WriteLinesToFile 
-      File="$(OutputPath)appsetting.json" 
+      File="$(OutputPath)appsettings.json" 
       Lines="@(MergedJsonLines)" 
       Overwrite="true" />
   </Target>
