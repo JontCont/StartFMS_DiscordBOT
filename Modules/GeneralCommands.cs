@@ -1,5 +1,7 @@
+using System.Net;
 using Discord;
 using Discord.Interactions;
+using Newtonsoft.Json;
 
 class GeneralCommands : InteractionModuleBase<SocketInteractionContext>
 {
@@ -374,5 +376,49 @@ class GeneralCommands : InteractionModuleBase<SocketInteractionContext>
             }
         }
         await RespondAsync($"已移除所有身分組", embeds: [], ephemeral: true);
+    }
+
+    // our first /command!
+    [SlashCommand("join", "加入")]
+    public async Task JoinTicket(string ticketId)
+    {
+        string apiUrl = $"http://localhost:3000/ticket/{ticketId}";
+        var client = new HttpClient();
+        var response = await client.GetAsync(apiUrl);
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            await RespondAsync("此票不存在", embeds: [], ephemeral: true);
+            return;
+        }
+
+        var ticket = JsonConvert.DeserializeObject<TicketArgs>(content);
+        if (ticket == null)
+        {
+            await RespondAsync("此票不存在", embeds: [], ephemeral: true);
+        }
+        else
+        {
+            var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == ticket.role);
+
+            //如果身上有這個身分組就不用再加入
+            if (Context.User is IGuildUser user)
+            {
+                if (role == null)
+                {
+                    await createUserRole(ticket.role);
+                }
+
+                if (role != null && user.RoleIds.Contains(role.Id))
+                {
+                    await RespondAsync("您已經加入過了", embeds: [], ephemeral: true);
+                    return;
+                }
+
+                await JoinUserRole(ticket.role);
+                await RespondAsync($"您加入了 {ticket.role}", embeds: [], ephemeral: true);
+            }
+        }
     }
 }
