@@ -36,6 +36,36 @@ public class CommandHandler
         _commands.SlashCommandExecuted += SlashCommandExecuted;
         _commands.ContextCommandExecuted += ContextCommandExecuted;
         _commands.ComponentCommandExecuted += ComponentCommandExecuted;
+        _commands.ModalCommandExecuted += ModalCommandExecuted;
+    }
+
+    private Task ModalCommandExecuted(ModalCommandInfo arg1, Discord.IInteractionContext arg2, Discord.Interactions.IResult arg3)
+    {
+        if (!arg3.IsSuccess)
+        {
+            switch (arg3.Error)
+            {
+                case InteractionCommandError.UnmetPrecondition:
+                    // implement
+                    break;
+                case InteractionCommandError.UnknownCommand:
+                    // implement
+                    break;
+                case InteractionCommandError.BadArgs:
+                    // implement
+                    break;
+                case InteractionCommandError.Exception:
+                    // implement
+                    break;
+                case InteractionCommandError.Unsuccessful:
+                    // implement
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return Task.CompletedTask;
     }
 
     private Task ComponentCommandExecuted(ComponentCommandInfo arg1, Discord.IInteractionContext arg2, Discord.Interactions.IResult arg3)
