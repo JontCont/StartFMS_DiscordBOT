@@ -21,16 +21,16 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
             var category = guild.CategoryChannels.FirstOrDefault(x => x.Name == 指定分類);
             if (category == null)
             {
-                await RespondAsync($"找不到名為 {指定分類} 的分類。", embeds: [], ephemeral: true);
+                await RespondAsync($"找不到名為 {指定分類} 的分類。", ephemeral: true);
                 return;
             }
             var voiceChannel = await guild.CreateVoiceChannelAsync(頻道名稱, x => x.CategoryId = category.Id);
-            await RespondAsync($"已建立語音頻道：{voiceChannel.Name}", embeds: [], ephemeral: true);
+            await RespondAsync($"已建立語音頻道：{voiceChannel.Name}", ephemeral: true);
         }
         else
         {
             var voiceChannel = await guild.CreateVoiceChannelAsync(頻道名稱);
-            await RespondAsync($"已建立語音頻道：{voiceChannel.Name}", embeds: [], ephemeral: true);
+            await RespondAsync($"已建立語音頻道：{voiceChannel.Name}", ephemeral: true);
         }
 
         if (擁有身分組 != null)
@@ -47,17 +47,17 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var voiceChannel = guild.VoiceChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (voiceChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", ephemeral: true);
             return;
         }
         var role = guild.Roles.FirstOrDefault(x => x.Name == 角色名稱);
         if (role == null)
         {
-            await RespondAsync($"找不到名為 {角色名稱} 的角色。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {角色名稱} 的角色。", ephemeral: true);
             return;
         }
         await voiceChannel.AddPermissionOverwriteAsync(role, new OverwritePermissions(connect: PermValue.Allow, speak: PermValue.Allow, stream: PermValue.Allow, muteMembers: PermValue.Allow, deafenMembers: PermValue.Allow, moveMembers: PermValue.Allow, useVoiceActivation: PermValue.Allow, prioritySpeaker: PermValue.Allow));
-        await RespondAsync($"已將語音頻道 {voiceChannel.Name} 加入角色 {role.Name} 最大權限", embeds: [], ephemeral: true);
+        await RespondAsync($"已將語音頻道 {voiceChannel.Name} 加入角色 {role.Name} 最大權限", ephemeral: true);
     }
 
     // 語音頻道加入身分組
@@ -68,17 +68,17 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var voiceChannel = guild.VoiceChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (voiceChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", ephemeral: true);
             return;
         }
         var role = guild.Roles.FirstOrDefault(x => x.Name == 角色名稱);
         if (role == null)
         {
-            await RespondAsync($"找不到名為 {角色名稱} 的角色。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {角色名稱} 的角色。", ephemeral: true);
             return;
         }
         await voiceChannel.AddPermissionOverwriteAsync(role, new OverwritePermissions(connect: PermValue.Allow));
-        await RespondAsync($"已將語音頻道 {voiceChannel.Name} 加入角色 {role.Name}", embeds: [], ephemeral: true);
+        await RespondAsync($"已將語音頻道 {voiceChannel.Name} 加入角色 {role.Name}", ephemeral: true);
     }
 
     // 修改語音頻道名稱
@@ -89,11 +89,11 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var voiceChannel = guild.VoiceChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (voiceChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", ephemeral: true);
             return;
         }
         await voiceChannel.ModifyAsync(x => x.Name = 新名稱);
-        await RespondAsync($"已修改語音頻道名稱：{voiceChannel.Name} -> {新名稱}", embeds: [], ephemeral: true);
+        await RespondAsync($"已修改語音頻道名稱：{voiceChannel.Name} -> {新名稱}", ephemeral: true);
     }
 
     // 刪除語音頻道
@@ -104,11 +104,11 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var voiceChannel = guild.VoiceChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (voiceChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的語音頻道。", ephemeral: true);
             return;
         }
         await voiceChannel.DeleteAsync();
-        await RespondAsync($"已刪除語音頻道：{voiceChannel.Name}", embeds: [], ephemeral: true);
+        await RespondAsync($"已刪除語音頻道：{voiceChannel.Name}", ephemeral: true);
     }
 
     // 產生文字頻道
@@ -121,16 +121,16 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
             var category = guild.CategoryChannels.FirstOrDefault(x => x.Name == 指定分類);
             if (category == null)
             {
-                await RespondAsync($"找不到名為 {指定分類} 的分類。", embeds: [], ephemeral: true);
+                await RespondAsync($"找不到名為 {指定分類} 的分類。", ephemeral: true);
                 return;
             }
             var textChannel = await guild.CreateTextChannelAsync(頻道名稱, x => x.CategoryId = category.Id);
-            await RespondAsync($"已建立文字頻道：{textChannel.Name}", embeds: [], ephemeral: true);
+            await RespondAsync($"已建立文字頻道：{textChannel.Name}", ephemeral: true);
         }
         else
         {
             var textChannel = await guild.CreateTextChannelAsync(頻道名稱);
-            await RespondAsync($"已建立文字頻道：{textChannel.Name}", embeds: [], ephemeral: true);
+            await RespondAsync($"已建立文字頻道：{textChannel.Name}", ephemeral: true);
         }
     }
 
@@ -142,17 +142,17 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var textChannel = guild.TextChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (textChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", ephemeral: true);
             return;
         }
         var role = guild.Roles.FirstOrDefault(x => x.Name == 角色名稱);
         if (role == null)
         {
-            await RespondAsync($"找不到名為 {角色名稱} 的角色。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {角色名稱} 的角色。", ephemeral: true);
             return;
         }
         await textChannel.AddPermissionOverwriteAsync(role, new OverwritePermissions(sendMessages: PermValue.Allow, readMessageHistory: PermValue.Allow, manageRoles: PermValue.Allow));
-        await RespondAsync($"已將文字頻道 {textChannel.Name} 加入角色 {role.Name} 最大權限", embeds: [], ephemeral: true);
+        await RespondAsync($"已將文字頻道 {textChannel.Name} 加入角色 {role.Name} 最大權限", ephemeral: true);
     }
 
     // 文字頻道加入身分組
@@ -163,17 +163,17 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var textChannel = guild.TextChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (textChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", ephemeral: true);
             return;
         }
         var role = guild.Roles.FirstOrDefault(x => x.Name == 角色名稱);
         if (role == null)
         {
-            await RespondAsync($"找不到名為 {角色名稱} 的角色。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {角色名稱} 的角色。", ephemeral: true);
             return;
         }
         await textChannel.AddPermissionOverwriteAsync(role, new OverwritePermissions(sendMessages: PermValue.Allow));
-        await RespondAsync($"已將文字頻道 {textChannel.Name} 加入角色 {role.Name}", embeds: [], ephemeral: true);
+        await RespondAsync($"已將文字頻道 {textChannel.Name} 加入角色 {role.Name}", ephemeral: true);
     }
 
     // 修改文字頻道名稱
@@ -184,11 +184,11 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var textChannel = guild.TextChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (textChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", ephemeral: true);
             return;
         }
         await textChannel.ModifyAsync(x => x.Name = 新名稱);
-        await RespondAsync($"已修改文字頻道名稱：{textChannel.Name} -> {新名稱}", embeds: [], ephemeral: true);
+        await RespondAsync($"已修改文字頻道名稱：{textChannel.Name} -> {新名稱}", ephemeral: true);
     }
 
     // 刪除文字頻道
@@ -200,16 +200,15 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var textChannel = guild.TextChannels.FirstOrDefault(x => x.Name == 頻道名稱);
         if (textChannel == null)
         {
-            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {頻道名稱} 的文字頻道。", ephemeral: true);
             return;
         }
         await textChannel.DeleteAsync();
-        await RespondAsync($"已刪除文字頻道：{textChannel.Name}", embeds: [], ephemeral: true);
+        await RespondAsync($"已刪除文字頻道：{textChannel.Name}", ephemeral: true);
     }
 
     // 產生分類
     [SlashCommand("create-category", "建立分類")]
-    [RequireUserPermission(GuildPermission.Administrator)]
     public async Task CreateCategory(string categoryName)
     {
         var guild = Context.Guild;
@@ -219,44 +218,42 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
 
     // 修改分類名稱
     [SlashCommand("modify-category", "修改分類名稱")]
-    [RequireUserPermission(GuildPermission.Administrator)]
     public async Task ModifyCategory(string categoryName, string newCategoryName)
     {
         var guild = Context.Guild;
         var category = guild.CategoryChannels.FirstOrDefault(x => x.Name == categoryName);
         if (category == null)
         {
-            await RespondAsync($"找不到名為 {categoryName} 的分類。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {categoryName} 的分類。", ephemeral: true);
             return;
         }
         await category.ModifyAsync(x => x.Name = newCategoryName);
-        await RespondAsync($"已修改分類名稱：{category.Name} -> {newCategoryName}", embeds: [], ephemeral: true);
+        await RespondAsync($"已修改分類名稱：{category.Name} -> {newCategoryName}", ephemeral: true);
     }
 
     // 刪除分類
     [SlashCommand("delete-category", "刪除分類")]
-    [RequireUserPermission(GuildPermission.Administrator)]
     public async Task DeleteCategory(string categoryName)
     {
         var guild = Context.Guild;
         var category = guild.CategoryChannels.FirstOrDefault(x => x.Name == categoryName);
         if (category == null)
         {
-            await RespondAsync($"找不到名為 {categoryName} 的分類。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {categoryName} 的分類。", ephemeral: true);
             return;
         }
         await category.DeleteAsync();
-        await RespondAsync($"已刪除分類：{category.Name}", embeds: [], ephemeral: true);
+        await RespondAsync($"已刪除分類：{category.Name}", ephemeral: true);
     }
 
     // 產生角色
     [SlashCommand("create-role", "建立角色")]
-    [RequireUserPermission(GuildPermission.Administrator)]
     public async Task CreateRole(string roleName)
     {
         var guild = Context.Guild;
-        var role = await guild.CreateRoleAsync(roleName);
-        await RespondAsync($"已建立角色：{role.Name}");
+        Random random = new Random();
+        var role = await guild.CreateRoleAsync(roleName, color: new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)));
+        await RespondAsync($"已建立角色：{role.Name}", ephemeral: true);
     }
 
     // 修改角色名稱
@@ -267,11 +264,11 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var role = guild.Roles.FirstOrDefault(x => x.Name == roleName);
         if (role == null)
         {
-            await RespondAsync($"找不到名為 {roleName} 的角色。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {roleName} 的角色。", ephemeral: true);
             return;
         }
         await role.ModifyAsync(x => x.Name = newRoleName);
-        await RespondAsync($"已修改角色名稱：{role.Name} -> {newRoleName}", embeds: [], ephemeral: true);
+        await RespondAsync($"已修改角色名稱：{role.Name} -> {newRoleName}", ephemeral: true);
     }
 
     // 刪除角色
@@ -282,10 +279,10 @@ class AdministratorCommands : InteractionModuleBase<SocketInteractionContext>
         var role = guild.Roles.FirstOrDefault(x => x.Name == roleName);
         if (role == null)
         {
-            await RespondAsync($"找不到名為 {roleName} 的角色。", embeds: [], ephemeral: true);
+            await RespondAsync($"找不到名為 {roleName} 的角色。", ephemeral: true);
             return;
         }
         await role.DeleteAsync();
-        await RespondAsync($"已刪除角色：{role.Name}", embeds: [], ephemeral: true);
+        await RespondAsync($"已刪除角色：{role.Name}", ephemeral: true);
     }
 }

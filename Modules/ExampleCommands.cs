@@ -16,27 +16,7 @@ public class ExampleCommands : InteractionModuleBase<SocketInteractionContext>
         _handler = handler;
     }
 
-    // our first /command!
-    [SlashCommand("8ball", "輸入問題，獲得答案")]
-    public async Task EightBall(string question)
-    {
-        // create a list of possible replies
-        var replies = new List<string>();
-
-        // add our possible replies
-        replies.Add("yes");
-        replies.Add("no");
-        replies.Add("maybe");
-        replies.Add("hazzzzy....");
-
-        // get the answer
-        var answer = replies[new Random().Next(replies.Count - 1)];
-
-        // reply with the answer
-        await RespondAsync($"You asked: [**{question}**], and your answer is: [**{answer}**]");
-    }
-
-    [SlashCommand("select", "輸入問題，獲得答案")]
+    [SlashCommand("select", "Sample: 輸入問題，獲得答案")]
     public async Task JapanIndividualCharacter()
     {
         var builder = new ComponentBuilder()
