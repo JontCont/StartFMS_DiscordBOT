@@ -6,4 +6,5 @@ class AppConfigs
     public string TestGuildId { get; set; }
 
     public string ConnectionUrl { get; set; }
+    public string DeeplToken { get; set; }
 }
