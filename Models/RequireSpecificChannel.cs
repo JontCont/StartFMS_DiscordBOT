@@ -12,15 +12,16 @@ public class RequireSpecificChannelAttribute : PreconditionAttribute
         _allowedChannelIds = new List<ulong>(channelIds);
     }
 
-    public override Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context, ICommandInfo command, IServiceProvider services)
+    public override async Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context, ICommandInfo command, IServiceProvider services)
     {
         if (_allowedChannelIds.Contains(context.Channel.Id))
         {
-            return Task.FromResult(PreconditionResult.FromSuccess());
+            return PreconditionResult.FromSuccess();
         }
         else
         {
-            return Task.FromResult(PreconditionResult.FromError("This command can only be used in specific channels."));
+            await context.Channel.SendMessageAsync("This command can only be used in specific channels.",false);
+            return PreconditionResult.FromError("This command can only be used in specific channels.");
         }
     }
 }

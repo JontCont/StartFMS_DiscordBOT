@@ -22,18 +22,30 @@ class TranslationCommands : InteractionModuleBase<SocketInteractionContext>
         _deepLClient.Dispose();
     }
 
-    [SlashCommand("translate", "翻譯")]
-    [RequireSpecificChannel(1336140668044836955, 1336140909355601920)]
-    public async Task AskAsync(string text, bool isChangeText = true)
+    [SlashCommand("e", "翻譯")]
+    [RequireSpecificChannel(1336140668044836955)]
+    public async Task TranslateEnglish(string text, bool isChangeText = true)
     {
-        var translatedText = new {
-            Text = text,
-        }; 
-        // var translatedText = await _deepLClient.TranslateTextAsync(
-        //     text,
-        //     sourceLanguageCode: null,
-        //     targetLanguageCode: "en-US")
-        //     .ConfigureAwait(false);
+        var translatedText = await _deepLClient.TranslateTextAsync(
+            text,
+            sourceLanguageCode: null,
+            targetLanguageCode: "en-US")
+            .ConfigureAwait(false);
+        if (!isChangeText)
+            await RespondAsync($"回答前 : {text} , 翻譯後 : {translatedText.Text}", ephemeral: false);
+        else
+            await RespondAsync(translatedText.Text, ephemeral: false);
+    }
+
+    [SlashCommand("j", "翻譯")]
+    [RequireSpecificChannel(1336140909355601920)]
+    public async Task TranslateJapan(string text, bool isChangeText = true)
+    {
+        var translatedText = await _deepLClient.TranslateTextAsync(
+            text,
+            sourceLanguageCode: null,
+            targetLanguageCode: LanguageCode.Japanese)
+            .ConfigureAwait(false);
         if (!isChangeText)
             await RespondAsync($"回答前 : {text} , 翻譯後 : {translatedText.Text}", ephemeral: false);
         else
