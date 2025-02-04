@@ -1,0 +1,27 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: '3.4'
+
+services:
+  bots:
+    image: discordbot
+    build:
+      context: .
+      dockerfile: '.\Dockerfile'
+    ports:
+      - 1950:1950
+    networks:
+      - discordbot-net
+  db:
+    image: discordbot_db
+    build:
+      context: '..\StartFMS.DiscordBot.DB'
+      dockerfile: 'Dockerfile'
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    networks:
+      - discordbot-net
+networks:
+  discordbot-net:
