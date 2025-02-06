@@ -1,5 +1,5 @@
 
-class AppConfigs
+public class AppConfigs
 {
     public string Environment { get; set; }
     public string Token { get; set; }
